@@ -1,42 +1,66 @@
 # Kafka Setup - Local
-1. Run zookeeper service
+- Run zookeeper service
 
-```
-zookeeper-server-start.bat ..\..\config\zookeeper-properties.props
-```
+  ```
+  zookeeper-server-start.bat ..\..\config\zookeeper-properties.props
+  ```
 
-2. Run Kafka server
+- Run Kafka server
 
-```
-kafka-server-start.bat ..\..\config\server.props
-```
+  ```
+  kafka-server-start.bat ..\..\config\server.props
+  ```
 
 # Flask API - Publisher endpoints for kafka and pubsub
-3. server runs here and produces messages
 
-```
-py app.py
-```
+Server runs here and produces messages
+
+  ```
+  py app.py
+  ```
+
+- To publish a message to kafka message queue
+
+  ```
+  http://localhost:5000/kafka/push-to-consumer?start_idx=0&end_idx=1
+  ```
+
+- To publish a message to pubsub message queue
+
+  ```
+  http://localhost:5000/pubsub/push-to-consumer?start_idx=0&end_idx=1
+  ```
+
+Here, start_idx and end_idx represent the test set index for fashion MNIST dataset.
+
 
 # Kafka Consumer
-4. consumer with model inference lives here
+- Consumer with model inference lives here
 
-```
-py consumer.py
-```
+  ```
+  py consumer.py
+  ```
+
+- Output is the list of predicted class labels on the test set based on the start_idx and end_idx provided
+- Output is printed to consumer console
 
 # Google Pubsub Subscriber
-5. subscriber with model inference lives here
+- Subscriber with model inference lives here
 
-```
-py subscriber.py
-```
+  ```
+  py subscriber.py
+  ```
 
-### Kafka Setup
+- Output is the list of predicted class labels on the test set based on the start_idx and end_idx provided
+- Output is printed to subscriber console
+
+# Setup Instructions
+
+## Kafka Setup
 - https://www.geeksforgeeks.org/how-to-install-and-run-apache-kafka-on-windows/
 - https://www.youtube.com/watch?v=EUzH9khPYgs
 
-### Pubsub Setup
+## Pubsub Setup
 - https://cloud.google.com/pubsub/docs/create-topic-gcloud
 - https://cloud.google.com/pubsub/docs/create-topic-console
 - Credential file must be placed at root
