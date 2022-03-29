@@ -1,7 +1,8 @@
-from flask import Flask, request, jsonify
-from google.cloud import pubsub_v1
-import os
 import json
+import os
+
+from flask import Flask, jsonify, redirect, render_template, request, url_for
+from google.cloud import pubsub_v1
 from kafka import KafkaProducer
 
 # KAFKA SETUP
@@ -26,7 +27,6 @@ app = Flask(__name__)
 
 @app.route('/kafka/push-to-consumer', methods=['GET', 'POST'])
 def kafkaProducer():
-    req = request.args
     start_idx = int(request.args.get('start_idx'))
     end_idx = int(request.args.get('end_idx'))
 
@@ -48,7 +48,6 @@ def kafkaProducer():
 
 @app.route('/pubsub/push-to-consumer', methods=['GET', 'POST'])
 def googlePublisher():
-    req = request.args
     start_idx = request.args.get('start_idx')
     end_idx = request.args.get('end_idx')
 
@@ -66,6 +65,25 @@ def googlePublisher():
         "start_idx": start_idx,
         "end_idx": end_idx
     })
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        message_broker = request.form['message_broker']
+        start_idx = request.form['start_idx']
+        end_idx = request.form['end_idx']
+
+        print(message_broker, start_idx, end_idx)
+
+        if message_broker == 'kafka':
+            return redirect(url_for('kafkaProducer', start_idx=start_idx, end_idx=end_idx))
+        elif message_broker == 'pubsub':
+            return redirect(url_for('googlePublisher', start_idx=start_idx, end_idx=end_idx))
+
+    else:
+        return render_template('form.html')
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

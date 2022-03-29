@@ -1,0 +1,45 @@
+<h1>Model Inference</h1>
+
+
+
+<form action="/" method = "POST">
+
+<p>Choose Broker:&nbsp;
+<select name="message_broker" id="broker">
+  <option value="kafka">Kafka</option>
+  <option value="pubsub">Pubsub</option>
+</select>
+</p>
+
+
+<p>
+Start Index: <input name="start_idx" type="number" required />
+<br>
+End Index:&nbsp; <input name="end_idx" type="number" required />
+<br><br>
+<input type = "submit">
+</p>
+
+</form>
+
+
+<hr>
+<p>
+    <b>Usage</b>
+    <br>
+    <ol>
+        <li>Choose a message broker from the dropdown.</li>
+        <li>Feed the start index and end index</li>
+        <li>Click the "Submit" button.</li>
+    </ol>
+
+    <b>Output</b>
+    <br><br>
+    Output will be displayed in the consumer console.
+
+    <br><br>
+    <b>Note</b>
+    <br>
+    The start index and end index refer to the index of the test set for Fashion MNIST dataset fetched from tensorflow/keras.
+
+</p>
