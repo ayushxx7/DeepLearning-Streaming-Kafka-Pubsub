@@ -1,12 +1,12 @@
+import json
+import traceback
+from datetime import datetime
+
+from kafka import KafkaConsumer
 from tensorflow import keras
 from tensorflow.keras.datasets import fashion_mnist as mnist
 from tensorflow.keras.utils import to_categorical
 
-from kafka import KafkaConsumer, KafkaProducer
-import os
-import json
-import uuid
-from concurrent.futures import ThreadPoolExecutor
 
 def load_data():
     (X_train, y_train), (X_test, y_test) = keras.datasets.fashion_mnist.load_data()
@@ -33,7 +33,8 @@ def model_inference(data):
     end_idx = data['end_idx']
 
     predicted_classes = model_pred(start_idx, end_idx)
-    print('Model Inference...')
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f'[{now}] Model Inference [{start_idx} - {end_idx}]')
     print(predicted_classes)
 
 
@@ -44,6 +45,10 @@ KAFKA_SERVER = "localhost:9092"
 consumer = KafkaConsumer(
     TOPIC_NAME,
     value_deserializer=lambda m: json.loads(m.decode('utf-8')),
+    bootstrap_servers=KAFKA_SERVER,
+    auto_offset_reset='earliest',
+    enable_auto_commit=True,
+    group_id='consumer-group-1'
 )
 
 # loading train and test data from keras
@@ -63,5 +68,8 @@ labels = {
 model = keras.models.load_model('model.h5')
 
 for message in consumer:
-    index_range_x_test = message.value
-    model_inference(index_range_x_test)
+    try:
+        index_range_x_test = message.value
+        model_inference(index_range_x_test)
+    except:
+        print(traceback.format_exc())
