@@ -1,10 +1,12 @@
-from concurrent.futures import TimeoutError
-from google.cloud import pubsub_v1
 import os
+import traceback
+from datetime import datetime
 
+from google.cloud import pubsub_v1
 from tensorflow import keras
 from tensorflow.keras.datasets import fashion_mnist as mnist
 from tensorflow.keras.utils import to_categorical
+
 
 def load_data():
     (X_train, y_train), (X_test, y_test) = keras.datasets.fashion_mnist.load_data()
@@ -27,7 +29,7 @@ def model_pred(start_idx=0, end_idx=1):
     return ",".join(label_resp)
 
 def model_inference(message: pubsub_v1.subscriber.message.Message) -> None:
-    print(f"Received {message}.")
+    # print(f"Received {message}.")
     message.ack()
 
     data = message.data.decode('utf-8')
@@ -40,11 +42,9 @@ def model_inference(message: pubsub_v1.subscriber.message.Message) -> None:
     start_idx = int(attrs['start_idx'])
     end_idx = int(attrs['end_idx'])
 
-    # print('start_idx:', start_idx)
-    # print('end_idx:', end_idx)
-
     predicted_classes = model_pred(start_idx, end_idx)
-    print('Model Inference...')
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f'[{now}] Model Inference [{start_idx} - {end_idx}]')
     print(predicted_classes)
 
 
@@ -79,7 +79,8 @@ with subscriber:
     try:
         print('starting stream...')
         streaming_pull_future.result()
-    except (TimeoutError, KeyboardInterrupt):
+    except:
+        print(traceback.format_exc())
         print('ending stream...')
         streaming_pull_future.cancel()
         streaming_pull_future.result()

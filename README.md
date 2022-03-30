@@ -33,6 +33,7 @@ Server runs here and produces messages
 
 Here, start_idx and end_idx represent the test set index for fashion MNIST dataset.
 
+The above endpoints are called when user submits the form displayed on root url.
 
 # Kafka Consumer
 - Consumer with model inference lives here
@@ -65,6 +66,14 @@ Here, start_idx and end_idx represent the test set index for fashion MNIST datas
 - https://cloud.google.com/pubsub/docs/create-topic-console
 - Credential file must be placed at root
 
+# Model
+- CNN based mode on on Fashion MNIST Dataset.
+- To train/update model, update the `fashion_mnist_model.ipynb` notebook.
+
+# Requirements
+```
+pip install -r requirements.txt
+```
 
 # References
 - https://cloud.google.com/pubsub/docs/emulator
