@@ -27,13 +27,13 @@
 - Run zookeeper service
 
   ```
-  zookeeper-server-start.bat ..\..\config\zookeeper-properties.props
+  zookeeper-server-start.bat ..\..\config\zookeeper.properties
   ```
 
 - Run Kafka server
 
   ```
-  kafka-server-start.bat ..\..\config\server.props
+  kafka-server-start.bat ..\..\config\server.properties
   ```
 
 # Flask API
