@@ -94,6 +94,16 @@ The above endpoints are called when user submits the form displayed on root url.
 ![Embedded Model](Kafka-Machine-Learning-with-Embedded-TensorFlow-Model.png)
 
 
+# Next Steps
+
+- Move the various configurations to a separate config.json file
+- Deploy the kafka queue implementation onto cloud
+- Try different deployment architectures to see which one fits the best
+- Move common model loading code to a separate class/file and call it in the different consumers
+- Improve model accuracy by changing the model architecture and data augmentation
+- Instead of passing indexes, can give option to upload test image directly to the user
+- Push the inference to a database
+
 # References
 - https://cloud.google.com/pubsub/docs/emulator
 - https://cloud.google.com/pubsub/docs/create-topic-console
