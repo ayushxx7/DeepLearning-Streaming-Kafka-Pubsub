@@ -3,3 +3,4 @@ kafka.setup
 *.json
 .ipynb_checkpoints
 models/*
+!resources/config.json

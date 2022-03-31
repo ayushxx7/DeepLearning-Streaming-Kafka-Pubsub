@@ -1,0 +1,17 @@
+{
+    "kafka": {
+        "bootstrap_servers": "localhost:9092",
+        "group_id": "consumer-group-1",
+        "topic": "INFERENCE"
+    },
+    "pubsub": {
+        "key_file": "vcai-creds.json",
+        "project_id": "inspiring-bonus-140103",
+        "subscription_id": "vectorai-subscription",
+        "topic": "MODEL-INFERENCE"
+    },
+    "model": {
+        "model_name": "model.h5",
+        "model_version": "1.0"
+    }
+}
