@@ -36,7 +36,7 @@ def prep_pixels(dataset):
         numpy.ndarray
             prepared dataset
     """
-    train_norm = dataset.astype('float32')
+    dataset = dataset.astype('float32')
     dataset = dataset / 255.0
     return dataset
 
