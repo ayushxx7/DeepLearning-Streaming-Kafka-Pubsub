@@ -1,3 +1,9 @@
+# Demo
+
+[Streaming Deep Learning Model Inference - Screencast](https://drive.google.com/file/d/1P3WVJAeRYxSaPBNwTarTomH39XPpdOaF/view?usp=sharing)
+
+---
+
 # Setup Instructions
 
 ## Kafka Setup
@@ -38,7 +44,7 @@
 
 # Flask API
 
-Server runs here and produces messages
+Server runs on `localhost:5000` and produces messages after submitting the form
 
   ```
   py app.py
@@ -92,7 +98,6 @@ The above endpoints are called when user submits the form displayed on root url.
 
 - Embedded Architecture for extremely fast inference time
 ![Embedded Model](Kafka-Machine-Learning-with-Embedded-TensorFlow-Model.png)
-
 
 # Next Steps
 
